@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <title>Biquad app</title>
+</head>
+<body>
+    <div class="biquadapp">
+        <div class="_openchat-section biquad">
+            <div class="_chatopen-btn biquad">
+                <div class="_openline biquad">
+                    <span class="_openline_promo biquad"><i class="fas fa-comments"></i></span>
+                </div>
+            </div>
+        </div>
+            <div class="_chatcloser biquad hidden">
+                <button class="_clsbutton biquad" type="button"><i class="fas fa-times"></i></button>
+            </div>
+
+            <div class="_chatwrapper biquad hidden">
+                <div class="divh100 biquad">
+                    <div class="_messanger biquad">
+                        <div class="_smscontainer biquad">
+                            <div class="_smslist biquad">
+                                
+                            </div>
+
+                            <div class="_sendbox biquad">
+                                <form class="_sendform">
+                                    <textarea class="_sendinput" placeholder="Напишите сообщение"></textarea>
+                                    <button type="button" class="_sendbtn"><i class="fas fa-paper-plane biquad"></i></button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    
+    
+
+    <style>
+        ._openchat-section {
+            position:fixed;
+            bottom:20px;
+            right: 25px;
+            z-index:20200620;
+            padding:0px;
+            margin:0px;
+            background: rgb(10, 55, 158);
+            background: linear-gradient(90deg, rgb(5, 50, 153) 0%, rgba(0,118,240,1) 78%);
+            min-width:80px;
+            min-height: 80px;
+            max-height: 80px;
+            border-radius: 200px;
+            cursor: pointer;
+            -webkit-box-shadow: 2px 2px 17px -1px rgba(0,36,121,1);
+            -moz-box-shadow: 2px 2px 17px -1px rgba(0,36,121,1);
+            box-shadow: 2px 2px 17px -1px rgba(0,36,121,1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color:white;
+            font-family: 'Roboto',sans-serif;
+            transition:.3s;
+            
+        }
+
+        ._openchat-section:hover {
+            transition:.3s;
+            transform: scale(1.2);
+        }
+
+        ._openchat-section i {
+            font-size: 25px;
+        }
+
+        ._chatwrapper {
+            z-index: 2147483000;
+            position: fixed;
+            bottom: 20px;
+            right: 25px;
+            min-width: 320px;
+            max-width: 320px;
+            height: 460px;
+            min-height: 460px;
+            opacity: 1.0;
+            border:2px solid rgb(197, 197, 197);
+            background: #FFFFFF;
+            border-radius: 25px;
+        }
+
+        .divh100 {
+            height:100%;
+            border-radius: 25px;
+        }
+
+        ._messanger {
+            height: 100%;
+            background:#FFF;
+            position: relative;
+            border-radius: 25px;
+        }
+
+        ._smscontainer {
+           height: 100%;
+           border-radius: 25px;
+        }
+
+        ._smslist {
+            height: calc(100% - 100px);
+            -webkit-box-flex: 1;
+            flex-direction: column;
+            overflow-y: scroll;
+            overflow-x: hidden;
+            padding: 10px;
+            flex: 1 1 0px;
+            border-radius: 8px;
+        }
+
+        ._sendform {
+            display: flex;
+            align-items: center;
+            flex-shrink: 0;
+            box-shadow: rgba(0, 0, 0, 0.05) 0px -3px 10px 0px;
+            padding: 5px;
+            background: rgb(255, 255, 255);
+            bottom: 0px;
+            position: relative;
+            flex-shrink: 0;
+            box-shadow: rgba(0, 0, 0, 0.05) 0px -3px 10px 0px;
+            z-index: 11;
+            border-radius: 25px;
+
+        }
+
+        ._sendinput {
+            height: 42px;
+            min-width: 240px;
+            border:1px solid rgb(238, 238, 238);
+            resize:none;
+            font-size: 16px;
+            font-family: 'Roboto',sans-serif;
+            outline:none;
+            overflow: auto;
+            padding:10px;
+            box-sizing: border-box;
+            border-radius: 25px;
+        }
+
+        ._sendbtn {
+            width: 55px;
+            height: 55px;
+            background:transparent;
+            outline:none;
+            border:none;
+            cursor: pointer;
+        }
+
+        ._sendbtn i {
+            font-size:25px;
+        }
+
+        ._sendbtn:hover {
+            opacity:0.6;
+            transition: 0.2s;
+        }
+
+        ._chatcloser {
+            position: fixed;
+            bottom: 500px;
+            right: 25px;
+        }
+
+        ._clsbutton {
+            outline:none;
+            border:none;
+            cursor: pointer;
+            background:none;
+        }
+
+        ._clsbutton:hover {
+            transform: scale(1.1);
+            transition:.3s;
+            opacity:0.5;
+        }
+
+        ._clsbutton i {
+            font-size:40px;
+        }
+
+        .hidden {
+            display: none;
+        }
+        
+    </style>
+
+    <script>
+        let openButton = document.getElementsByClassName('_openchat-section')[0];
+
+
+            openButton.onclick = function() {
+          
+                document.getElementsByClassName('_openchat-section')[0].style.display = "none";
+                document.getElementsByClassName('_chatcloser')[0].classList.remove('hidden');
+                document.getElementsByClassName('_chatwrapper')[0].classList.remove('hidden');
+         
+                
+            };
+        
+        
+
+            document.getElementsByClassName('_clsbutton')[0].onclick = function() {
+                document.getElementsByClassName('_openchat-section')[0].style.display = "";
+
+                document.getElementsByClassName('_chatcloser')[0].classList.add('hidden');
+                document.getElementsByClassName('_chatwrapper')[0].classList.add('hidden');
+            };
+        
+        
+
+
+            let sendBtn = document.getElementsByClassName('_sendbtn')[0];
+
+
+            sendBtn.onclick = function(event) {
+
+   
+
+            if(document.getElementsByClassName("_sendinput")[0].value.length > 0) {
+                let value = document.getElementsByClassName("_sendinput")[0].value;
+                
+        
+                let text = document.createElement("button");
+                text.innerText = value;
+
+                document.getElementsByClassName('_smslist')[0].appendChild(text);
+            }
+
+            };
+        
+
+    </script>
+
+</body>
+</html>
