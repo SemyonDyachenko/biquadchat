@@ -263,8 +263,12 @@
     </style>
 
     <script>
-        let openButton = document.getElementsByClassName('_openchat-section')[0];
+            const openButton = document.getElementsByClassName('_openchat-section')[0];
+            const sendBtn = document.getElementsByClassName('_sendbtn')[0];
+            const closeBtn = document.getElementsByClassName('_clsbutton')[0];
 
+
+            // click event listeners
 
             openButton.onclick = function() {
           
@@ -272,26 +276,18 @@
                 document.getElementsByClassName('_chatcloser')[0].classList.remove('hidden');
                 document.getElementsByClassName('_chatwrapper')[0].classList.remove('hidden');
          
+
+                get_messages(findUnqiueId());
                 
             };
         
-        
-
-            document.getElementsByClassName('_clsbutton')[0].onclick = function() {
+            closeBtn.onclick = function() {
                 document.getElementsByClassName('_openchat-section')[0].style.display = "";
 
                 document.getElementsByClassName('_chatcloser')[0].classList.add('hidden');
                 document.getElementsByClassName('_chatwrapper')[0].classList.add('hidden');
             };
         
-        
-
-
-            let sendBtn = document.getElementsByClassName('_sendbtn')[0];
-
-
-      
-            
 
             sendBtn.onclick = function(event) {
 
@@ -299,20 +295,78 @@
                     let value = document.getElementsByClassName("_sendinput")[0].value;
                     let parent = document.getElementsByClassName('_smslist')[0];
 
-            
+
                     sendMessage(parent,value);
 
 
                     document.getElementsByClassName("_sendinput")[0].value = "";
                 }
-             
+
             };
+        
+
+
+
+            async function get_messages(unique_id) {
+                let request = new XMLHttpRequest();
+
+                let urls = {
+                    mainurl : "https://www.biquad.ru/server/give?unique_id="+String(unique_id),
+                    proxyurl : "https://cors-anywhere.herokuapp.com/"
+                };
+
+                request.open("GET",urls.proxyurl+urls.mainurl,true);
+
+                request.setRequestHeader("Content-Type", "application/json");
+
+                request.send();
+
+                let json =request.responseText;
+                
+                //json.push(request.response);
+                //jsonString =  JSON.parse(json);
+                //console.log(jsonString);
+                console.log(json);
+
+            }    
 
 
             async function sendMessage(parentDOM,messageText) {
                 parentDOM.appendChild(createMessage(messageText));
 
                 createMessageRequest(messageText,String((new Date).getHours()) + ":" + String((new Date).getMinutes()));
+
+                let chatId = findUnqiueId();
+
+                let request = new XMLHttpRequest();
+
+                let urls = {
+                    mainurl : "https://www.biquad.ru/server/sendmessage.php",
+                    proxyurl : "https://cors-anywhere.herokuapp.com/"
+                };
+
+                let Message = {
+                    "id" : chatId,
+                    "content" : messageText,
+                    "time" : (String((new Date).getHours()) + ":" + String((new Date).getMinutes()))
+                };
+
+                let result = "";
+
+                let jsonMessage = JSON.stringify(Message);
+
+                request.open('POST',urls.proxyurl+urls.mainurl,true);
+
+                request.setRequestHeader("Content-Type", "application/json");
+
+                request.onreadystatechange = function() {
+                    if(request.readyState == 4 && (request.status >= 200 && request.status < 400)) {
+                        result = this.responseText;
+                    }
+                }
+
+                request.send(jsonMessage);
+                
             }
 
 
